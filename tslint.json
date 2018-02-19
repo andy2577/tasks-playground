@@ -32,10 +32,10 @@
       "check-format",
       "allow-leading-underscore"
     ],
-    "linebreak-style": [
-      true,
-      "LF"
-    ],
+    // "linebreak-style": [
+    //   true,
+    //   "LF"
+    // ],
     "whitespace": [
       true,
       "check-branch",

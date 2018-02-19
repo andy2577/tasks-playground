@@ -5,6 +5,7 @@ import { NgModule } from 'angular-ts-decorators';
 import { AppComponent } from './components/app.component';
 import { routes } from './app.routes';
 import { TasksModule } from './components/tasks.module';
+import { MedicalFormModule } from './components/medical-form/medical-form.module';
 
 export interface IComponentState extends ng.ui.IState {
   state: string;
@@ -17,7 +18,8 @@ export interface IComponentState extends ng.ui.IState {
   imports: [
     'ui.router',
     'ngSanitize',
-    TasksModule
+    TasksModule,
+    MedicalFormModule
   ],
   declarations: [
     AppComponent
