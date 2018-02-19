@@ -33,7 +33,7 @@ export class AppModule {
   }
 
   private static provideStates(states: IComponentState[], $stateProvider: ng.ui.IStateProvider) {
-    states.map((config) => {
+    states.map((config) => {debugger;
       const name = config.state;
       const namedState = config.views;
       if (namedState) {
