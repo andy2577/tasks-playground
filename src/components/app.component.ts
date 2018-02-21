@@ -2,6 +2,8 @@ import { Component } from 'angular-ts-decorators';
 
 @Component({
   selector: 'app',
-  template: `<task-manager></task-manager>`
+  template: `<a ui-sref="medical">Medical</a>
+              <ui-view></ui-view>
+              `
 })
-export class AppComponent {}
+export class AppComponent implements ng.IComponentController {}
