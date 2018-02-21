@@ -1,4 +1,4 @@
-import { Component } from 'angular-ts-decorators';
+import { Component, Input, Output } from 'angular-ts-decorators';
 import './datepicker.scss';
 
 @Component({
@@ -15,6 +15,7 @@ import './datepicker.scss';
           datepicker-options="$ctrl.dateOptions"
           ng-required="true"
           close-text="Close"
+          ng-change="$ctrl.onSelect()"
           alt-input-formats="$ctrl.altInputFormats" />
         <span class="input-group-btn">
           <button
@@ -28,6 +29,7 @@ import './datepicker.scss';
     </div>`
 })
 export class DatePicker implements ng.IComponentController {
+  @Output() selectedDate: Function;
   dt: Date;
   tomorrow = new Date();
   afterTomorrow = new Date();
@@ -42,7 +44,7 @@ export class DatePicker implements ng.IComponentController {
   dateOptions = {
     dateDisabled: this.disabled,
     formatYear: 'yy',
-    maxDate: new Date(2020, 5, 22),
+    maxDate: new Date(2018, 2, 22),
     minDate: new Date(),
     startingDay: 1
   };
@@ -65,12 +67,20 @@ export class DatePicker implements ng.IComponentController {
   formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
   altInputFormats = ['M!/d!/yyyy'];
 
-  constructor() {
+  constructor(){}
+
+  $onInit() {
     this.today();
     this.toggleMin();
     this.tomorrow.setDate(this.tomorrow.getDate() + 1);
     this.afterTomorrow.setDate(this.tomorrow.getDate() + 1);
     this.format = this.formats[2];
+  }
+
+  onSelect() {
+    this.selectedDate({
+      $event: { date: this.dt }
+    });
   }
 
   today() {
