@@ -1,10 +1,10 @@
 import { NgModule } from 'angular-ts-decorators';
-import { MedicalFormComponent } from './medical-form.component';
+import { MedicalForm } from './medical-form.component';
 
 @NgModule({
   name: 'MedicalFormModule',
   declarations: [
-    MedicalFormComponent
+    MedicalForm
   ],
   providers: [
   ]

@@ -4,7 +4,7 @@
 import { NgModule } from 'angular-ts-decorators';
 import { AppComponent } from './components/app.component';
 import { routes } from './app.routes';
-import { TasksModule } from './components/tasks.module';
+import { CommonModule } from './components/common.module';
 import { MedicalFormModule } from './components/medical-form/medical-form.module';
 
 export interface IComponentState extends ng.ui.IState {
@@ -17,8 +17,9 @@ export interface IComponentState extends ng.ui.IState {
   name: 'AppModule',
   imports: [
     'ui.router',
+    'ui.bootstrap',
     'ngSanitize',
-    TasksModule,
+    CommonModule,
     MedicalFormModule
   ],
   declarations: [
@@ -33,7 +34,7 @@ export class AppModule {
   }
 
   private static provideStates(states: IComponentState[], $stateProvider: ng.ui.IStateProvider) {
-    states.map((config) => {debugger;
+    states.map((config) => {
       const name = config.state;
       const namedState = config.views;
       if (namedState) {

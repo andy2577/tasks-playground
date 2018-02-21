@@ -5,18 +5,20 @@ import { TaskManager } from './task-manager/task-manager.component';
 import { TaskslistItemComponent } from './tasklist/tasklist.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { TaskComponent } from './task/task.component';
+import { DatePicker } from './datepicker/datepicker.component';
 
 @NgModule({
-  name: 'TasksModule',
+  name: 'CommonModule',
   declarations: [
     TaskManager,
     TasksListsComponent,
     TaskslistItemComponent,
     TasksComponent,
-    TaskComponent
+    TaskComponent,
+    DatePicker
   ],
   providers: [
     TasksService
   ]
 })
-export class TasksModule {}
+export class CommonModule {}

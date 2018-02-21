@@ -59,6 +59,7 @@ module.exports = function (env) {
         'angular/angular.js',
         'angular-ui-router/release/angular-ui-router.js',
         'angular-sanitize/angular-sanitize.js',
+        'angular-ui-bootstrap',
         'eventemitter3',
         'material-design-lite/material.css',
         'material-design-lite/material.js'

@@ -2,6 +2,8 @@ import { Component } from 'angular-ts-decorators';
 
 @Component({
   selector: 'medicalForm',
-  template: `<div><p>this is medical-form</p></div>`
+  template: `<div>
+              <date-picker></date-picker>
+            </div>`
 })
-export class MedicalFormComponent {}
+export class MedicalForm implements ng.IComponentController {}
