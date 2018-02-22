@@ -5,6 +5,6 @@ import { MedicalForm } from './components/medical-form/medical-form.component';
 
 export const routes: IComponentState[] = [
     { state: 'root', url: '/', component:  'AppComponent' },
-    { state: 'tasks', url: '/task', component: 'TaskManager'},
-    { state: 'medicalform', url: '/medical-form', component: 'MedicalForm' },
+    { state: 'tasks-manager', url: '/task', component: TaskManager},
+    { state: 'medical-form', url: '/medical-form', component: MedicalForm },
 ];

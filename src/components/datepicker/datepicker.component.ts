@@ -29,7 +29,12 @@ import './datepicker.scss';
     </div>`
 })
 export class DatePicker implements ng.IComponentController {
+  @Input() name: string;
+  @Input() maxDate?: Date;
+  @Input() minDate?: Date;
+
   @Output() selectedDate: Function;
+
   dt: Date;
   tomorrow = new Date();
   afterTomorrow = new Date();
@@ -44,7 +49,7 @@ export class DatePicker implements ng.IComponentController {
   dateOptions = {
     dateDisabled: this.disabled,
     formatYear: 'yy',
-    maxDate: new Date(2018, 2, 22),
+    maxDate: new Date(2020, 2, 22),
     minDate: new Date(),
     startingDay: 1
   };
@@ -67,11 +72,13 @@ export class DatePicker implements ng.IComponentController {
   formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
   altInputFormats = ['M!/d!/yyyy'];
 
-  constructor(){}
+  constructor() {}
 
   $onInit() {
+    this.dateOptions.maxDate = this.maxDate ? this.maxDate : this.dateOptions.maxDate;
+    this.dateOptions.minDate = this.minDate ? this.minDate : this.dateOptions.minDate;
     this.today();
-    this.toggleMin();
+    // this.toggleMin();
     this.tomorrow.setDate(this.tomorrow.getDate() + 1);
     this.afterTomorrow.setDate(this.tomorrow.getDate() + 1);
     this.format = this.formats[2];
@@ -79,7 +86,8 @@ export class DatePicker implements ng.IComponentController {
 
   onSelect() {
     this.selectedDate({
-      $event: { date: this.dt }
+      $event: { date: this.dt,
+                name: this.name }
     });
   }
 
