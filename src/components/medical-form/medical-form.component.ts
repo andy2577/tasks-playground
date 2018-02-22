@@ -31,6 +31,7 @@ import { Component } from 'angular-ts-decorators';
                 <div class="row">
                   <drop-down
                     items="$ctrl.itemsList"
+                    selected-doctor="$ctrl.displayDoctor($event)"
                     ></drop-down>
                 </div>
               <!-- End Drop Down -->
@@ -47,6 +48,11 @@ export class MedicalForm implements ng.IComponentController {
   ];
 
   displayDate($event: {date: Date; name: string}) {
+    this.dbObj = {...this.dbObj, ...$event};
+    console.log(this.dbObj);
+  }
+
+  displayDoctor($event: {doctor: string}) {
     this.dbObj = {...this.dbObj, ...$event};
     console.log(this.dbObj);
   }

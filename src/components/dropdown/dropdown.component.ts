@@ -18,8 +18,12 @@ import { Component, Input, Output } from 'angular-ts-decorators';
                   uib-dropdown-menu
                   role="menu"
                   aria-labelledby="single-button">
-                  <li role="menuitem" ng-repeat="choice in $ctrl.items">
-                    <a href>{{choice}}</a>
+                  <li role="menuitem" >
+                    <a
+                      href="#"
+                      ng-repeat="choice in $ctrl.items"
+                      ng-click="$ctrl.selectedItem(choice)"
+                      >{{choice}}</a>
                   </li>
                 </ul>
               </span>`
@@ -28,13 +32,15 @@ import { Component, Input, Output } from 'angular-ts-decorators';
 export class DropDown implements ng.IComponentController {
   @Input() items;
 
+  @Output() selectedDoctor: Function;
+
   status = {
     isopen: false
   };
 
-  toggled(open) {
-    console.log('Dropdown is now: ', open);
-  };
+  // toggled(open) {
+  //   console.log('Dropdown is now: ', open);
+  // };
 
   toggleDropdown($event) {
     $event.preventDefault();
@@ -42,4 +48,9 @@ export class DropDown implements ng.IComponentController {
     this.status.isopen = !this.status.isopen;
   };
 
+  selectedItem(name) {
+    this.selectedDoctor({
+      $event: { doctor: name }
+    });
+  }
 }
