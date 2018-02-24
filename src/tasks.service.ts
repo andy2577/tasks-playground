@@ -39,13 +39,13 @@ const defaultTasklist = '@default';
 export class TasksService {
   public tasklistId: string;
 
+  public static isTaskCompleted(task: ITask) {
+    return task.status === taskStatus.completed;
+  }
+
   /*@ngInject*/
   constructor() {
     this.tasklistId = defaultTasklist;
-  }
-
-  public static isTaskCompleted(task: ITask) {
-    return task.status === taskStatus.completed;
   }
 
   public async getTasklists(): Promise<ITasklist[]> {

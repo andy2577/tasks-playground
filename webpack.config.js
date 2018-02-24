@@ -51,7 +51,7 @@ module.exports = function (env) {
   }
 
   return {
-    devtool: isProd ? 'source-map' : 'eval',
+    devtool:'source-map',
     context: sourcePath,
     entry: {
       main: sourcePath + '/bootstrap.ts',
@@ -61,6 +61,7 @@ module.exports = function (env) {
         'angular-sanitize/angular-sanitize.js',
         'angular-ui-bootstrap',
         'eventemitter3',
+        'angularfire',
         'material-design-lite/material.css',
         'material-design-lite/material.js'
       ]

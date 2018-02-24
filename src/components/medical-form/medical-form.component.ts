@@ -47,8 +47,9 @@ export class MedicalForm implements ng.IComponentController {
     'Don\'t use Doctor'
   ];
 
-  displayDate($event: {date: Date; name: string}) {
-    this.dbObj = {...this.dbObj, ...$event};
+  displayDate($event) {
+    const dateObj = JSON.parse(`{ "${$event.name}": "${$event.date}"}`);
+    this.dbObj = {...this.dbObj, ...dateObj};
     console.log(this.dbObj);
   }
 

@@ -7,9 +7,13 @@ import { TasksComponent } from './tasks/tasks.component';
 import { TaskComponent } from './task/task.component';
 import { DatePicker } from './datepicker/datepicker.component';
 import { DropDown } from './dropdown/dropdown.component';
+import { MedicalFormModule } from './medical-form/medical-form.module';
 
 @NgModule({
   name: 'CommonModule',
+  imports: [
+    MedicalFormModule
+  ],
   declarations: [
     TaskManager,
     TasksListsComponent,

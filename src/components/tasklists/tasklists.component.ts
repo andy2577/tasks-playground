@@ -14,10 +14,10 @@ export class TasksListsComponent implements ng.IComponentController {
   tasklistTitle: string;
   taskLists: any[];
   /*@ngInject*/
-  constructor(private TasksService: TasksService, private $element: ng.IAugmentedJQuery) {}
+  constructor(private tasksService: TasksService, private $element: ng.IAugmentedJQuery) {}
 
   async $onInit() {
-    this.taskLists = await this.TasksService.getTasklists();
+    this.taskLists = await this.tasksService.getTasklists();
     window['componentHandler'].upgradeAllRegistered();
   }
 
@@ -38,7 +38,7 @@ export class TasksListsComponent implements ng.IComponentController {
 
   private async addTasklist() {
     try {
-      const response = await this.TasksService.addTasklist(this.tasklistTitle);
+      const response = await this.tasksService.addTasklist(this.tasklistTitle);
       this.taskLists.push(response);
     } catch (e) {
       console.error(e);
