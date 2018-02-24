@@ -1,4 +1,6 @@
 import { Component } from 'angular-ts-decorators';
+import  * as firebase  from 'firebase';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'medicalForm',
@@ -10,7 +12,7 @@ import { Component } from 'angular-ts-decorators';
                 </div>
                 <div class="col-sm-3">
                   <date-picker
-                    selected-date="$ctrl.displayDate($event)"
+                    selected-date="$ctrl.updateDate($event)"
                     name="'dateFrom'" >
                   </date-picker>
                 </div>
@@ -21,7 +23,7 @@ import { Component } from 'angular-ts-decorators';
                   <date-picker
                     name="'dateTo'"
                     min-date="$ctrl.minDate"
-                    selected-date="$ctrl.displayDate($event)">
+                    selected-date="$ctrl.updateDate($event)">
                   </date-picker>
                 </div>
               </div>
@@ -31,15 +33,40 @@ import { Component } from 'angular-ts-decorators';
                 <div class="row">
                   <drop-down
                     items="$ctrl.itemsList"
-                    selected-doctor="$ctrl.displayDoctor($event)"
+                    selected-doctor="$ctrl.updateDoctor($event)"
                     ></drop-down>
                 </div>
               <!-- End Drop Down -->
+              <!-- Buttons -->
+              <a
+              href="#"
+              ng-click="$ctrl.writeToDb()"
+              >write</a>
+              <a
+              href="#"
+              ng-click="$ctrl.readFromDb()"
+              >read</a>
+              <!-- End Buttons -->
+
+              <!-- Appointments -->
+              <h4 ng-show="$ctrl.appointmentList !== []" >Appointments:</h4>
+              <ul>
+                <li ng-repeat="appointment in $ctrl.appointmentList" >
+                  <pre>
+                    {{ $index + 1 }} starts: {{ appointment.dateFrom }}
+                      ends: {{ appointment.dateTo }}
+                      doctor: {{ appointment.doctor }}
+                  </pre>
+                </li>
+              </ul>
+
             </div>`
 })
 export class MedicalForm implements ng.IComponentController {
   minDate: Date = new Date('Wed Feb 1 2018 09:10:20 GMT+0200');
   dbObj: Object = {};
+  DB;
+  appointmentList= [];
 
   itemsList = [
     'Good Dorctor',
@@ -47,15 +74,39 @@ export class MedicalForm implements ng.IComponentController {
     'Don\'t use Doctor'
   ];
 
-  displayDate($event) {
+  constructor() {
+    this.DB  = firebase.database();
+  }
+
+  $onInit() {
+    this.dbObj = {dateFrom: 'Wed Feb 01 2018',
+    dateTo: 'Wed Feb 28 2018',
+    doctor: 'Cool Doctor'};
+  }
+
+  writeToDb() {
+    let newAppntKey = firebase.database().ref().child('appointments').push().key;
+    this.DB.ref('appointments/' + newAppntKey).set(this.dbObj)
+      .then(() => console.log('Success'));
+  }
+
+  readFromDb() {
+    this.DB.ref('appointments/').once('value')
+      .then(res => {debugger;
+        this.appointmentList =  _.values(res.val());
+        const arr = _.reduce(res.val(), o => o, []);
+        console.log(this.appointmentList);
+      });
+  }
+
+  updateDate($event) {
     const dateObj = JSON.parse(`{ "${$event.name}": "${$event.date}"}`);
     this.dbObj = {...this.dbObj, ...dateObj};
-    console.log(this.dbObj);
+    // console.log(this.dbObj);
   }
 
-  displayDoctor($event: {doctor: string}) {
+  updateDoctor($event: {doctor: string}) {
     this.dbObj = {...this.dbObj, ...$event};
-    console.log(this.dbObj);
+    // console.log(this.dbObj);
   }
-
 }

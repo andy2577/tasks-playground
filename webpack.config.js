@@ -61,6 +61,7 @@ module.exports = function (env) {
         'angular-sanitize/angular-sanitize.js',
         'angular-ui-bootstrap',
         'eventemitter3',
+        'lodash',
         'angularfire',
         'material-design-lite/material.css',
         'material-design-lite/material.js'

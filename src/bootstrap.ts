@@ -32,8 +32,6 @@ const config = {
 
 firebase.initializeApp(config);
 
-// const database = firebase.database();
-
 window['bootstrap'] = () => {
   // bootstrap
   angular.element(document).ready(() => {
