@@ -1,6 +1,6 @@
 import { Component } from 'angular-ts-decorators';
-import  * as firebase  from 'firebase';
 import * as _ from 'lodash';
+import { AppointmentSevice } from '../../appointment.service';
 
 @Component({
   selector: 'medicalForm',
@@ -62,13 +62,11 @@ import * as _ from 'lodash';
                   <a href="#" ng-click="$ctrl.removeAppointment(appointment);">remove</a>
                 </li>
               </ul>
-
             </div>`
 })
 export class MedicalForm implements ng.IComponentController {
   minDate: Date = new Date('Wed Feb 1 2018 09:10:20 GMT+0200');
   dbObj: Object = {};
-  DB;
   appointmentList= [];
 
   itemsList = [
@@ -77,8 +75,8 @@ export class MedicalForm implements ng.IComponentController {
     'Don\'t use Doctor'
   ];
 
-  constructor() {
-    this.DB  = firebase.database();
+  /*@ngInject*/
+  constructor( private AppointmentSevice: AppointmentSevice ) {
   }
 
   $onInit() {
@@ -87,9 +85,13 @@ export class MedicalForm implements ng.IComponentController {
     doctor: 'Cool Doctor'};
   }
 
+  serviceTest() {
+    const test = this.AppointmentSevice.getAppointment();
+    console.log(test);
+  }
+
   writeToDb() {
-    let newAppntKey = firebase.database().ref().child('appointments').push().key;
-    this.DB.ref('appointments/' + newAppntKey).set({...this.dbObj, 'id': newAppntKey})
+    this.AppointmentSevice.writeToDb(this.dbObj)
       .then(() => {
         this.readFromDb();
         console.log('Success')
@@ -97,15 +99,14 @@ export class MedicalForm implements ng.IComponentController {
   }
 
   readFromDb() {
-    this.DB.ref('appointments/').once('value')
+    this.AppointmentSevice.getAllAppointments()
       .then(res => {
         this.appointmentList =  _.values(res.val());
       });
   }
   
   removeAppointment(appointment) {
-    console.log(appointment);
-    this.DB.ref('appointments/' + appointment.id).remove()
+    this.AppointmentSevice.removeAppointment(appointment.id)
       .then(res => {
         console.log('Success removing Item');
         this.readFromDb();
@@ -115,11 +116,9 @@ export class MedicalForm implements ng.IComponentController {
   updateDate($event) {
     const dateObj = JSON.parse(`{ "${$event.name}": "${$event.date}"}`);
     this.dbObj = {...this.dbObj, ...dateObj};
-    // console.log(this.dbObj);
   }
 
   updateDoctor($event: {doctor: string}) {
     this.dbObj = {...this.dbObj, ...$event};
-    // console.log(this.dbObj);
   }
 }

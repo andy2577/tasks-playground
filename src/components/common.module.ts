@@ -8,6 +8,7 @@ import { TaskComponent } from './task/task.component';
 import { DatePicker } from './datepicker/datepicker.component';
 import { DropDown } from './dropdown/dropdown.component';
 import { MedicalFormModule } from './medical-form/medical-form.module';
+import { AppointmentSevice } from '../appointment.service';
 
 @NgModule({
   name: 'CommonModule',
@@ -24,7 +25,8 @@ import { MedicalFormModule } from './medical-form/medical-form.module';
     DropDown
   ],
   providers: [
-    TasksService
+    TasksService,
+    AppointmentSevice
   ]
 })
 export class CommonModule {}
