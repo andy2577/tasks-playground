@@ -38,25 +38,28 @@ import * as _ from 'lodash';
                 </div>
               <!-- End Drop Down -->
               <!-- Buttons -->
-              <a
-              href="#"
-              ng-click="$ctrl.writeToDb()"
-              >write</a>
-              <a
-              href="#"
-              ng-click="$ctrl.readFromDb()"
-              >read</a>
+              <button type="button" 
+                class="btn btn-primary" 
+                ng-click="$ctrl.writeToDb()"
+              >
+              Save to DB
+              </button> 
+              <button type="button" 
+                class="btn btn-primary" 
+                ng-click="$ctrl.readFromDb()"
+              >Read</button>
               <!-- End Buttons -->
 
               <!-- Appointments -->
               <h4 ng-show="$ctrl.appointmentList !== []" >Appointments:</h4>
               <ul>
-                <li ng-repeat="appointment in $ctrl.appointmentList" >
+                <li ng-repeat="appointment in $ctrl.appointmentList"  id="{{appointment.id}}" >
                   <pre>
-                    {{ $index + 1 }} starts: {{ appointment.dateFrom }}
-                      ends: {{ appointment.dateTo }}
-                      doctor: {{ appointment.doctor }}
+{{ $index + 1 }} starts: {{ appointment.dateFrom }}
+  ends: {{ appointment.dateTo }}
+  doctor: {{ appointment.doctor }}
                   </pre>
+                  <a href="#" ng-click="$ctrl.removeAppointment(appointment);">remove</a>
                 </li>
               </ul>
 
@@ -86,16 +89,26 @@ export class MedicalForm implements ng.IComponentController {
 
   writeToDb() {
     let newAppntKey = firebase.database().ref().child('appointments').push().key;
-    this.DB.ref('appointments/' + newAppntKey).set(this.dbObj)
-      .then(() => console.log('Success'));
+    this.DB.ref('appointments/' + newAppntKey).set({...this.dbObj, 'id': newAppntKey})
+      .then(() => {
+        this.readFromDb();
+        console.log('Success')
+      });
   }
 
   readFromDb() {
     this.DB.ref('appointments/').once('value')
-      .then(res => {debugger;
+      .then(res => {
         this.appointmentList =  _.values(res.val());
-        const arr = _.reduce(res.val(), o => o, []);
-        console.log(this.appointmentList);
+      });
+  }
+  
+  removeAppointment(appointment) {
+    console.log(appointment);
+    this.DB.ref('appointments/' + appointment.id).remove()
+      .then(res => {
+        console.log('Success removing Item');
+        this.readFromDb();
       });
   }
 
