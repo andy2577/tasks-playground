@@ -55,11 +55,11 @@ export const routes: IComponentState[] = [
     { state: 'medical-form', url: '/medical-form', component: MedicalForm},
 ];
 ```
-in __main.ts__ change:
+in __main.ts__ change:    **const selector = state.state;**
 ```javascript
 export class AppModule {
   private static setTemplate(state: IComponentState) {
-    const selector = state.**state**;
+    const selector = state.state;
     state.template = `<${selector}></${selector}>`;
     delete state.component;
   }
