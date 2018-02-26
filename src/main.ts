@@ -26,7 +26,7 @@ export interface IComponentState extends ng.ui.IState {
 })
 export class AppModule {
   private static setTemplate(state: IComponentState) {
-    const selector = state.component.selector;
+    const selector = state.state;
     state.template = `<${selector}></${selector}>`;
     delete state.component;
   }

@@ -4,7 +4,6 @@ import { TaskManager } from './components/task-manager/task-manager.component';
 import { MedicalForm } from './components/medical-form/medical-form.component';
 
 export const routes: IComponentState[] = [
-    { state: 'root', url: '/', component:  'AppComponent' },
     { state: 'tasks-manager', url: '/task', component: TaskManager},
-    { state: 'medical-form', url: '/medical-form', component: MedicalForm },
+    { state: 'medical-form', url: '/medical-form', component: MedicalForm},
 ];

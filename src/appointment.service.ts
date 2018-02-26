@@ -19,12 +19,11 @@ export class AppointmentSevice {
     }
 
     getAllAppointments() {
-        return this.DB.ref('appointments/').once('value')
+        return this.DB.ref('appointments/').once('value');
     }
-  
+
     removeAppointment(appointmentId) {
         return this.DB.ref('appointments/' + appointmentId).remove()
     }
- 
-}
 
+}
