@@ -55,7 +55,7 @@ export const routes: IComponentState[] = [
     { state: 'medical-form', url: '/medical-form', component: MedicalForm},
 ];
 ```
-in __main.ts__ change:    **const selector = state.state;__**
+in __main.ts__ change:    **__const selector = state.state;__**
 ```javascript
 export class AppModule {
   private static setTemplate(state: IComponentState) {
