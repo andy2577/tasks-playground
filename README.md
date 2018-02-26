@@ -28,7 +28,7 @@ To get you started you can simply clone the repository.
 To build the application for production just run `npm build`, it creates dist directory that have the production optimized build.
 
 
-### Services Issues !!!
+## Services Issues !!!
 
 #### Declaring
 ```javascript
@@ -38,7 +38,7 @@ export class AppointmentSevice {}
 
 #### Using
 
-`/*@ngInject*/` - is a must in front of the constructor function injection.
+`/*@ngInject*/` - is a must in front of the constructor function if you use injection.
 
 ```javascript
   /*@ngInject*/
@@ -46,3 +46,21 @@ export class AppointmentSevice {}
   }
   ```
 variable needs to match exactly the class name e.i.: **(private AppointmentSevice: AppointmentSevice)**
+
+## UI-Router Issues !!!
+
+In file __app.routes.ts__ 
+```javascript
+export const routes: IComponentState[] = [
+    { state: 'medical-form', url: '/medical-form', component: MedicalForm},
+];
+```
+in __main.ts__ change:
+```javascript
+export class AppModule {
+  private static setTemplate(state: IComponentState) {
+    const selector = state.**state**;
+    state.template = `<${selector}></${selector}>`;
+    delete state.component;
+  }
+  ```

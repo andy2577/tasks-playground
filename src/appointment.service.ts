@@ -25,5 +25,4 @@ export class AppointmentSevice {
     removeAppointment(appointmentId) {
         return this.DB.ref('appointments/' + appointmentId).remove()
     }
-
 }
